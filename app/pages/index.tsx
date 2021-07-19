@@ -1,8 +1,8 @@
-import { Suspense } from "react"
-import { Link, BlitzPage, useMutation, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import logout from "app/auth/mutations/logout"
+import { Suspense } from "react";
+import { Link, BlitzPage, useMutation, Routes } from "blitz";
+import Layout from "app/core/layouts/Layout";
+import { useCurrentUser } from "app/core/hooks/useCurrentUser";
+import logout from "app/auth/mutations/logout";
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -10,8 +10,8 @@ import logout from "app/auth/mutations/logout"
  */
 
 const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
+  const currentUser = useCurrentUser();
+  const [logoutMutation] = useMutation(logout);
 
   if (currentUser) {
     return (
@@ -19,7 +19,7 @@ const UserInfo = () => {
         <button
           className="button small"
           onClick={async () => {
-            await logoutMutation()
+            await logoutMutation();
           }}
         >
           Logout
@@ -30,7 +30,7 @@ const UserInfo = () => {
           User role: <code>{currentUser.role}</code>
         </div>
       </>
-    )
+    );
   } else {
     return (
       <>
@@ -45,9 +45,9 @@ const UserInfo = () => {
           </a>
         </Link>
       </>
-    )
+    );
   }
-}
+};
 
 const Home: BlitzPage = () => {
   return (
@@ -57,9 +57,13 @@ const Home: BlitzPage = () => {
           <img src="/logo.png" alt="blitz.js" />
         </div>
         <p>
-          <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in.
+          <strong>Congrats!</strong> Your app is ready, including user sign-up
+          and log-in.
         </p>
-        <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
+        <div
+          className="buttons"
+          style={{ marginTop: "1rem", marginBottom: "1rem" }}
+        >
           <Suspense fallback="Loading...">
             <UserInfo />
           </Suspense>
@@ -73,7 +77,9 @@ const Home: BlitzPage = () => {
         <pre>
           <code>blitz generate all project name:string</code>
         </pre>
-        <div style={{ marginBottom: "1rem" }}>(And select Yes to run prisma migrate)</div>
+        <div style={{ marginBottom: "1rem" }}>
+          (And select Yes to run prisma migrate)
+        </div>
         <div>
           <p>
             Then <strong>restart the server</strong>
@@ -136,8 +142,9 @@ const Home: BlitzPage = () => {
         body {
           padding: 0;
           margin: 0;
-          font-family: "Libre Franklin", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+          font-family: "Libre Franklin", -apple-system, BlinkMacSystemFont,
+            Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+            Helvetica Neue, sans-serif;
         }
 
         * {
@@ -240,8 +247,8 @@ const Home: BlitzPage = () => {
         }
         code {
           font-size: 0.9rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-            Bitstream Vera Sans Mono, Courier New, monospace;
+          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
         }
 
         .grid {
@@ -262,10 +269,10 @@ const Home: BlitzPage = () => {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
 
-Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.suppressFirstRenderFlicker = true;
+Home.getLayout = (page) => <Layout title="Home">{page}</Layout>;
 
-export default Home
+export default Home;
