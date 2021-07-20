@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Link, BlitzPage, useMutation, Routes } from "blitz";
+import { BlitzPage, useMutation } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import { useCurrentUser } from "app/core/hooks/useCurrentUser";
 import logout from "app/auth/mutations/logout";
@@ -11,7 +11,14 @@ const Home: BlitzPage = () => {
   return (
     <div>
       {currentUser ? (
-        <button onClick={() => logoutMutation()}>Logout</button>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100px" }}
+        >
+          {currentUser.picture ? (
+            <img src={currentUser.picture} alt="Profile picture" />
+          ) : null}
+          <button onClick={() => logoutMutation()}>Logout</button>
+        </div>
       ) : (
         <a href="/api/auth/google">Log In</a>
       )}
