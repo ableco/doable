@@ -30,9 +30,11 @@ const Home: BlitzPage = () => {
           </Button>
         </div>
       ) : (
-        <Button variant="primary" size="base">
-          <a href="/api/auth/google">Log In</a>
-        </Button>
+        <a href="/api/auth/google">
+          <Button variant="primary" size="base">
+            Log In
+          </Button>
+        </a>
       )}
     </div>
   );
