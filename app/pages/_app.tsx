@@ -1,13 +1,15 @@
+import LoginForm from "app/auth/components/LoginForm";
+import "@ableco/abledev-components/dist/style.css";
+import "app/core/styles/index.css";
 import {
   AppProps,
-  ErrorBoundary,
-  ErrorComponent,
   AuthenticationError,
   AuthorizationError,
+  ErrorBoundary,
+  ErrorComponent,
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
 } from "blitz";
-import LoginForm from "app/auth/components/LoginForm";
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page);
