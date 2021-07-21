@@ -16,7 +16,12 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <DocumentHead />
+        <DocumentHead>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter"
+            rel="stylesheet"
+          />
+        </DocumentHead>
         <body>
           <Main />
           <BlitzScript />
