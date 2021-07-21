@@ -2,7 +2,6 @@ import { getSession, Routes } from "blitz";
 
 async function protectPage({ req, res }) {
   const session = await getSession(req, res);
-  console.log("????????");
   if (!session.userId) {
     return {
       redirect: {
