@@ -3,6 +3,7 @@ import { BlitzPage, useMutation } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import { useCurrentUser } from "app/core/hooks/useCurrentUser";
 import logout from "app/auth/mutations/logout";
+import { Button } from "@ableco/abledev-components";
 
 const Home: BlitzPage = () => {
   const currentUser = useCurrentUser();
@@ -11,16 +12,27 @@ const Home: BlitzPage = () => {
   return (
     <div>
       {currentUser ? (
-        <div
-          style={{ display: "flex", flexDirection: "column", width: "100px" }}
-        >
+        <div>
           {currentUser.picture ? (
-            <img src={currentUser.picture} alt="Profile picture" />
+            <img
+              src={currentUser.picture}
+              alt="Profile picture"
+              width="96"
+              height="96"
+            />
           ) : null}
-          <button onClick={() => logoutMutation()}>Logout</button>
+          <Button
+            variant="primary"
+            size="base"
+            onClick={() => logoutMutation()}
+          >
+            Logout
+          </Button>
         </div>
       ) : (
-        <a href="/api/auth/google">Log In</a>
+        <Button variant="primary" size="base">
+          <a href="/api/auth/google">Log In</a>
+        </Button>
       )}
     </div>
   );
