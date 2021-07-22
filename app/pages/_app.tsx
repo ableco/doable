@@ -1,4 +1,3 @@
-import LoginForm from "app/auth/components/LoginForm";
 import "@ableco/abledev-components/dist/style.css";
 import "app/core/styles/index.css";
 import {
@@ -24,9 +23,14 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-function RootErrorFallback({ error, resetErrorBoundary }: ErrorFallbackProps) {
+function RootErrorFallback({ error }: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
-    return <LoginForm onSuccess={resetErrorBoundary} />;
+    return (
+      <ErrorComponent
+        statusCode={error.statusCode}
+        title="Authentication Failed"
+      />
+    );
   } else if (error instanceof AuthorizationError) {
     return (
       <ErrorComponent
