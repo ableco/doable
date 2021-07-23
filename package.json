@@ -24,7 +24,8 @@
     ]
   },
   "dependencies": {
-    "@ableco/abledev-components": "0.0.1-alpha4",
+    "@ableco/abledev-components": "0.0.1-alpha6",
+    "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@prisma/client": "2.27.0",
     "@types/passport-google-oauth": "1.0.42",
