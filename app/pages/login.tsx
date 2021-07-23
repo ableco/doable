@@ -1,18 +1,4 @@
-import { Button } from "@ableco/abledev-components";
-import { HTMLAttributes, ReactNode } from "react";
-
-interface CenterProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
-}
-
-function Center({ className = "", ...props }: CenterProps) {
-  return (
-    <div
-      className={`flex items-center justify-center ${className}`}
-      {...props}
-    />
-  );
-}
+import { Button, Center } from "@ableco/abledev-components";
 
 function LoginPage() {
   return (
