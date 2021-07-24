@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@ableco/abledev-components": "0.0.1-alpha6",
+    "@ableco/abledev-components": "0.0.1-alpha7",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@prisma/client": "2.27.0",
