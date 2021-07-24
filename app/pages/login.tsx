@@ -1,5 +1,5 @@
 import { Button, Center } from "@ableco/abledev-components";
-import { GetServerSideProps } from "blitz";
+import { GetServerSideProps, getSession } from "blitz";
 
 function LoginPage({ redirectUrl }: { redirectUrl: string }) {
   return (
@@ -12,7 +12,22 @@ function LoginPage({ redirectUrl }: { redirectUrl: string }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+  res,
+}) => {
+  const session = await getSession(req, res);
+
+  if (session.userId) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   const redirectUrl = query.redirectUrl ?? "/";
   return { props: { redirectUrl } };
 };
