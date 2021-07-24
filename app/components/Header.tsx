@@ -1,4 +1,4 @@
-import { Link, Routes, useMutation, useRouter } from "blitz";
+import { Link, Routes, useMutation } from "blitz";
 import { HomeIcon } from "@heroicons/react/outline";
 import logout from "app/auth/mutations/logout";
 
@@ -13,7 +13,7 @@ function Header() {
           <h1 className="font-bold text-base">Doable</h1>
         </a>
       </Link>
-      <div className="space-x-4">
+      <div className="space-x-8">
         <Link href={Routes.SettingsPage()}>Settings</Link>
         <Link href="/login">
           <a onClick={() => logoutMutation()}>Logout</a>

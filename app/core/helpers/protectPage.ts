@@ -1,17 +1,21 @@
-import { getSession, Routes } from "blitz";
+import { GetServerSideProps, getSession, Routes } from "blitz";
 
-async function protectPage({ req, res }) {
+const protectPage: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession(req, res);
   if (!session.userId) {
+    const url = req.url ?? "/";
+    const loginPath = Routes.LoginPage().pathname;
+    const destination = `${loginPath}?redirectUrl=${url}`;
+
     return {
       redirect: {
-        destination: Routes.LoginPage().pathname,
+        destination,
         permanent: false,
       },
     };
   }
 
   return { props: {} };
-}
+};
 
 export default protectPage;
