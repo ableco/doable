@@ -1,6 +1,6 @@
 import { passportAuth } from "blitz";
 import { OAuth2Strategy as GoogleStrategy } from "passport-google-oauth";
-import db from "db";
+import createOrUpdateUser from "app/auth/services/createOrUpdateUser";
 
 export default passportAuth({
   successRedirectUrl: "/",
@@ -21,26 +21,19 @@ export default passportAuth({
             return done(new Error("Google OAuth response doesn't have email."));
           }
 
-          const picture = profile._json.picture as string;
-          const name = profile.displayName;
-
-          const user = await db.user.upsert({
-            where: { email },
-            create: {
-              email,
-              picture,
-              name,
-            },
-            update: { email, name, picture },
+          const user = await createOrUpdateUser({
+            email,
+            name: profile.displayName,
+            picture: profile._json.picture as string,
           });
 
-          const publicData = {
-            userId: user.id,
-            roles: [user.role],
-            source: "google",
-          };
-
-          done(null, { publicData });
+          done(null, {
+            publicData: {
+              userId: user.id,
+              roles: [user.role],
+              source: "google",
+            },
+          });
         },
       ),
     },
