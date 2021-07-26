@@ -1,24 +1,22 @@
-import { BlitzPage } from "blitz";
+import { BlitzPage, invalidateQuery, useMutation, useQuery } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import protectPage from "app/core/helpers/protectPage";
 import { TextInput } from "@ableco/abledev-components";
+import { FormEvent, useState } from "react";
+import createTask from "app/tasks/mutations/createTask";
+import listTasks from "app/tasks/queries/listTasks";
 
 const Home: BlitzPage = () => {
   return (
     <div
       className="mt-14 mx-auto flex flex-col justify-center space-y-4"
       style={{
-        // TODO: 500 is not in the normal tailwind classes
+        // TODO: "width: 500" is not in the normal tailwind classes
         width: 500,
       }}
     >
-      <TextInput
-        label="New task description"
-        hideLabel
-        className="w-full"
-        placeholder="Add a new task..."
-      />
-      <div className="h-5 w-full bg-red-600" />
+      <CreateTaskForm />
+      <TasksList />
       <p className="text-center">
         <button className="text-gray-400 text-sm cursor-pointer underline">
           Show completed tasks
@@ -27,6 +25,49 @@ const Home: BlitzPage = () => {
     </div>
   );
 };
+
+function CreateTaskForm() {
+  const [description, setDescription] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createTaskMutation] = useMutation(createTask, {
+    onSuccess: () => invalidateQuery(listTasks),
+  });
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) {
+      return;
+    }
+    const trimmedDescription = description.trim();
+    if (trimmedDescription.length > 0) {
+      setIsSubmitting(true);
+      await createTaskMutation({ description: trimmedDescription });
+      setIsSubmitting(false);
+      setDescription("");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextInput
+        label="New task description"
+        hideLabel
+        className="w-full"
+        placeholder="Add a new task..."
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+      />
+    </form>
+  );
+}
+
+function TasksList() {
+  const [tasks] = useQuery(listTasks, {});
+
+  console.log(tasks);
+
+  return <div className="w-full" />;
+}
 
 Home.getLayout = (page) => <Layout title="Home">{page}</Layout>;
 Home.suppressFirstRenderFlicker = true;
