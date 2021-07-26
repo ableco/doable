@@ -28,8 +28,8 @@ const listTasks = resolver.pipe(
       (task) => !!task.completedAt,
     );
 
-    const sortedCompleteTasks = orderBy(
-      completeTasks,
+    const sortedIncompleteTasks = orderBy(
+      incompleteTasks,
       [
         (task) => !!task.dueDate,
         (task) => task.assignedUserId === session.userId,
@@ -39,8 +39,8 @@ const listTasks = resolver.pipe(
       ["desc", "desc", "asc", "asc"],
     );
 
-    const sortedIncompleteTasks = orderBy(
-      incompleteTasks,
+    const sortedCompleteTasks = orderBy(
+      completeTasks,
       [
         (task) => task.assignedUserId === session.userId,
         (task) => task.completedAt,
@@ -49,7 +49,7 @@ const listTasks = resolver.pipe(
       ["desc", "asc", "asc"],
     );
 
-    return [...sortedCompleteTasks, ...sortedIncompleteTasks];
+    return [...sortedIncompleteTasks, ...sortedCompleteTasks];
   },
 );
 
