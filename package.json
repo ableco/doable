@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@ableco/abledev-components": "0.0.1-alpha7",
+    "@ableco/abledev-components": "0.0.1-alpha9",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@prisma/client": "2.27.0",
@@ -33,6 +33,7 @@
     "@types/passport-google-oauth": "1.0.42",
     "autoprefixer": "10",
     "blitz": "0.38.5",
+    "date-fns": "2.23.0",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21",
     "passport-google-oauth": "2.0.0",

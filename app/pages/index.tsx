@@ -1,10 +1,11 @@
 import { BlitzPage, invalidateQuery, useMutation, useQuery } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import protectPage from "app/core/helpers/protectPage";
-import { TextInput } from "@ableco/abledev-components";
+import { ListContainer, TextInput } from "@ableco/abledev-components";
 import { FormEvent, useState } from "react";
 import createTask from "app/tasks/mutations/createTask";
 import listTasks from "app/tasks/queries/listTasks";
+import TaskComponent from "app/components/Task";
 
 const Home: BlitzPage = () => {
   return (
@@ -64,9 +65,15 @@ function CreateTaskForm() {
 function TasksList() {
   const [tasks] = useQuery(listTasks, {});
 
-  console.log(tasks);
-
-  return <div className="w-full" />;
+  return (
+    <div className="w-full">
+      <ListContainer variant="simple">
+        {tasks.map((task) => {
+          return <TaskComponent key={task.id} task={task} />;
+        })}
+      </ListContainer>
+    </div>
+  );
 }
 
 Home.getLayout = (page) => <Layout title="Home">{page}</Layout>;

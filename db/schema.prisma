@@ -79,8 +79,8 @@ model Task {
   description    String
   dueDate        DateTime?
   completedAt    DateTime?
-  assignedUser   User      @relation("AssignedUser", fields: [assignedUserId], references: [id])
-  assignedUserId Int
+  assignedUser   User?     @relation("AssignedUser", fields: [assignedUserId], references: [id])
+  assignedUserId Int?
   creator        User      @relation("Creator", fields: [creatorId], references: [id])
   creatorId      Int
 }
