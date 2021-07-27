@@ -1,5 +1,6 @@
 import { resolver } from "blitz";
-import db, { Task } from "db";
+import db from "db";
+import { emitWithUserId } from "io";
 import { z } from "zod";
 
 const ToggleTaskParams = z.object({
@@ -22,5 +23,7 @@ export default resolver.pipe(
       where: { id: task.id },
       data: { completedAt: task.completedAt ? null : new Date() },
     });
+
+    emitWithUserId(session.userId, "updatedTasks");
   },
 );

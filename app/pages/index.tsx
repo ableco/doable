@@ -2,10 +2,11 @@ import { BlitzPage, invalidateQuery, useMutation, useQuery } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import protectPage from "app/core/helpers/protectPage";
 import { ListContainer, TextInput } from "@ableco/abledev-components";
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import createTask from "app/tasks/mutations/createTask";
 import listTasks from "app/tasks/queries/listTasks";
 import TaskComponent from "app/components/Task";
+import { io } from "socket.io-client";
 
 const Home: BlitzPage = () => {
   const [hideCompletedTasks, setHideCompleteTasks] = useState(true);
@@ -13,6 +14,18 @@ const Home: BlitzPage = () => {
   const toggleHiding = useCallback(() => {
     setHideCompleteTasks(!hideCompletedTasks);
   }, [hideCompletedTasks]);
+
+  useEffect(() => {
+    const socket = io(window.location.origin);
+
+    socket.on("updatedTasks", (message) => {
+      invalidateQuery(listTasks);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <div

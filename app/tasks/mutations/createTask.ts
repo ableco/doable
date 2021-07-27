@@ -1,5 +1,6 @@
 import { resolver } from "blitz";
 import db from "db";
+import { emitWithUserId } from "io";
 import { z } from "zod";
 
 const CreateTaskParams = z.object({
@@ -17,5 +18,7 @@ export default resolver.pipe(
         assignedUserId: session.userId,
       },
     });
+
+    emitWithUserId(session.userId, "updatedTasks");
   },
 );
