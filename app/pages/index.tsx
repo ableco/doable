@@ -2,12 +2,18 @@ import { BlitzPage, invalidateQuery, useMutation, useQuery } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import protectPage from "app/core/helpers/protectPage";
 import { ListContainer, TextInput } from "@ableco/abledev-components";
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import createTask from "app/tasks/mutations/createTask";
 import listTasks from "app/tasks/queries/listTasks";
 import TaskComponent from "app/components/Task";
 
 const Home: BlitzPage = () => {
+  const [hideCompletedTasks, setHideCompleteTasks] = useState(true);
+
+  const toggleHiding = useCallback(() => {
+    setHideCompleteTasks(!hideCompletedTasks);
+  }, [hideCompletedTasks]);
+
   return (
     <div
       className="mt-14 mx-auto flex flex-col justify-center space-y-4"
@@ -17,10 +23,13 @@ const Home: BlitzPage = () => {
       }}
     >
       <CreateTaskForm />
-      <TasksList />
+      <TasksList hideCompletedTasks={hideCompletedTasks} />
       <p className="text-center">
-        <button className="text-gray-400 text-sm cursor-pointer underline">
-          Show completed tasks
+        <button
+          className="text-gray-400 text-sm cursor-pointer underline"
+          onClick={toggleHiding}
+        >
+          {hideCompletedTasks ? <>Show</> : <>Hide</>} completed tasks
         </button>
       </p>
     </div>
@@ -62,13 +71,21 @@ function CreateTaskForm() {
   );
 }
 
-function TasksList() {
+function TasksList({ hideCompletedTasks }: { hideCompletedTasks: boolean }) {
   const [tasks] = useQuery(listTasks, {});
+
+  const filteredTasks = useMemo(() => {
+    if (hideCompletedTasks) {
+      return tasks.filter((task) => !task.completedAt);
+    } else {
+      return tasks;
+    }
+  }, [hideCompletedTasks, tasks]);
 
   return (
     <div className="w-full">
       <ListContainer variant="simple">
-        {tasks.map((task) => {
+        {filteredTasks.map((task) => {
           return <TaskComponent key={task.id} task={task} />;
         })}
       </ListContainer>
