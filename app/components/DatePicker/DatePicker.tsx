@@ -1,12 +1,7 @@
-import {
-  cloneElement,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { cloneElement, ReactElement, useCallback, useState } from "react";
 import { usePopper } from "react-popper";
 import Calendar from "./Calendar";
+import useOnClickOutside from "./useOnClickOutside";
 
 interface DatePickerProps {
   children: ReactElement;
@@ -14,7 +9,7 @@ interface DatePickerProps {
 }
 
 function DatePicker({ children, onChange }: DatePickerProps) {
-  const [isCalendarOpen, setIsCalendarOpen] = useState(true);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const [referenceElement, setReferenceElement] = useState(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
@@ -70,35 +65,6 @@ function DatePicker({ children, onChange }: DatePickerProps) {
       </div>
     </>
   );
-}
-
-function useOnClickOutside(
-  containerElement: HTMLElement | null,
-  referenceElement: HTMLElement | null,
-  handler: (event: MouseEvent) => void,
-) {
-  useEffect(() => {
-    const listener = (event: MouseEvent) => {
-      // Do nothing if clicking ref's element or descendent elements
-      const isEventNotOutside = containerElement?.contains(
-        event.target as Node,
-      );
-      const isEventOnReference = referenceElement?.contains(
-        event.target as Node,
-      );
-
-      if (isEventNotOutside || isEventOnReference) {
-        return;
-      }
-      handler(event);
-    };
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [containerElement, handler, referenceElement]);
 }
 
 export default DatePicker;
