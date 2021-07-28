@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { format, isSameDay, isToday } from "date-fns";
+import { format, isSameDay, isToday as isDateToday } from "date-fns";
 import {
   cloneElement,
   HTMLAttributes,
@@ -21,18 +21,26 @@ import {
 import getDaysInMonth from "./getDaysInMonth";
 import getWeeks from "./getWeeks";
 
-export type Shortcut = {
+type Shortcut = {
   title: ReactNode;
   date: Date;
 };
 
-interface CalendarProps {
+type IsDateDisabled = (date: Date) => boolean;
+
+export interface CalendarProps {
   value: Date;
   onChange: (date: Date) => void;
   shortcuts: Array<Shortcut>;
+  isDateDisabled?: IsDateDisabled;
 }
 
-function Calendar({ value, onChange, shortcuts }: CalendarProps) {
+function Calendar({
+  value,
+  onChange,
+  shortcuts,
+  isDateDisabled = (_date) => false,
+}: CalendarProps) {
   const [currentMonth, setCurrentMonth] = useState<Month>(dateToMonth(value));
 
   useEffect(() => {
@@ -62,6 +70,7 @@ function Calendar({ value, onChange, shortcuts }: CalendarProps) {
         currentMonth={currentMonth}
         onDaySelect={handleDaySelect}
         selectedDate={value}
+        isDateDisabled={isDateDisabled}
       />
     </div>
   );
@@ -74,35 +83,68 @@ function dateToMonth(date: Date): Month {
   };
 }
 
+function getDayBgColorClass(isToday: boolean, isSelected: boolean) {
+  if (isSelected) {
+    return "bg-indigo-600";
+  }
+  if (isToday) {
+    return "bg-gray-100";
+  }
+  return "";
+}
+
+function getDayTextColorClass(
+  inOtherMonth: boolean,
+  isDisabled: boolean,
+  isSelected: boolean,
+) {
+  if (isDisabled) {
+    return "text-gray-200";
+  }
+  if (isSelected) {
+    return "text-white";
+  }
+  if (inOtherMonth) {
+    return "text-gray-400";
+  }
+  return "text-gray-900";
+}
+
 function CalendarDay({
   day,
   currentMonth,
   onDaySelect,
   selectedDate,
+  isDateDisabled,
 }: {
   day: Date;
   currentMonth: Month;
   onDaySelect: (day: Date) => void;
   selectedDate: Date;
+  isDateDisabled: IsDateDisabled;
 }) {
-  const fromADifferentMonth = currentMonth.month !== day.getMonth();
-  const selectDay = useCallback(() => {
-    onDaySelect(day);
-  }, [onDaySelect, day]);
+  const inOtherMonth = currentMonth.month !== day.getMonth();
+  const isToday = useMemo(() => isDateToday(day), [day]);
+  const isDisabled = useMemo(() => isDateDisabled(day), [day, isDateDisabled]);
+  const isSelected = useMemo(
+    () => isSameDay(day, selectedDate),
+    [day, selectedDate],
+  );
 
-  const isSelected = isSameDay(day, selectedDate);
+  const selectDay = useCallback(() => {
+    if (!isDisabled) {
+      onDaySelect(day);
+    }
+  }, [onDaySelect, day, isDisabled]);
 
   return (
     <button
       className={clsx(
-        "inline-block w-full h-full text-center text-sm rounded-full",
-        fromADifferentMonth
-          ? "text-gray-400"
-          : !isSelected
-          ? "text-gray-900"
-          : "",
-        isToday(day) ? "bg-gray-100" : "",
-        isSelected ? "bg-indigo-600 text-white" : "",
+        "inline-block w-full h-full text-center text-sm rounded-full focus:outline-none",
+        getDayBgColorClass(isToday, isSelected),
+        getDayTextColorClass(inOtherMonth, isDisabled, isSelected),
+        { ["cursor-default"]: isDisabled },
+        { ["focus:ring-indigo-500 focus:ring-2"]: !isDisabled },
       )}
       onClick={selectDay}
     >
@@ -115,10 +157,12 @@ function MonthDays({
   currentMonth,
   onDaySelect,
   selectedDate,
+  isDateDisabled,
 }: {
   currentMonth: Month;
   onDaySelect: (day: Date) => void;
   selectedDate: Date;
+  isDateDisabled: IsDateDisabled;
 }) {
   const allDays = useMemo(() => {
     return getDaysInMonth(currentMonth.month, currentMonth.year);
@@ -144,6 +188,7 @@ function MonthDays({
                     currentMonth={currentMonth}
                     onDaySelect={onDaySelect}
                     selectedDate={selectedDate}
+                    isDateDisabled={isDateDisabled}
                   />
                 </div>
               );

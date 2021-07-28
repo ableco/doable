@@ -3,12 +3,13 @@ import DatePicker from "app/components/DatePicker";
 import protectPage from "app/core/helpers/protectPage";
 import Layout from "app/core/layouts/Layout";
 import { BlitzPage } from "blitz";
-import { addDays, addWeeks } from "date-fns";
+import { addDays, addWeeks, isBefore, startOfDay } from "date-fns";
 import format from "date-fns/format";
 import { useState } from "react";
 
 const CalendarPage: BlitzPage = () => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const today = startOfDay(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(today);
 
   return (
     <Center>
@@ -16,10 +17,11 @@ const CalendarPage: BlitzPage = () => {
         value={selectedDate}
         onChange={setSelectedDate}
         shortcuts={[
-          { title: "Today", date: new Date() },
-          { title: "Tomorrow", date: addDays(new Date(), 1) },
-          { title: "Next Week", date: addWeeks(new Date(), 1) },
+          { title: "Today", date: today },
+          { title: "Tomorrow", date: addDays(today, 1) },
+          { title: "Next Week", date: addWeeks(today, 1) },
         ]}
+        isDateDisabled={(date) => isBefore(date, today)}
       >
         <Button>Pick a Date</Button>
       </DatePicker>

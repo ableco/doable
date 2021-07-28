@@ -1,13 +1,14 @@
 import { cloneElement, ReactElement, useCallback, useState } from "react";
 import { usePopper } from "react-popper";
-import Calendar, { Shortcut } from "./Calendar";
+import Calendar, { CalendarProps } from "./Calendar";
 import useOnClickOutside from "./useOnClickOutside";
 
 interface DatePickerProps {
   children: ReactElement;
   value: Date;
   onChange: (date: Date) => void;
-  shortcuts?: Array<Shortcut>;
+  shortcuts?: CalendarProps["shortcuts"];
+  isDateDisabled?: CalendarProps["isDateDisabled"];
 }
 
 function DatePicker({
@@ -15,6 +16,7 @@ function DatePicker({
   onChange,
   value = new Date(),
   shortcuts = [],
+  isDateDisabled,
 }: DatePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -63,7 +65,12 @@ function DatePicker({
         {...attributes.popper}
         style={{ ...styles.popper, display: isCalendarOpen ? "block" : "none" }}
       >
-        <Calendar shortcuts={shortcuts} value={value} onChange={handleChange} />
+        <Calendar
+          value={value}
+          onChange={handleChange}
+          shortcuts={shortcuts}
+          isDateDisabled={isDateDisabled}
+        />
       </div>
     </>
   );
