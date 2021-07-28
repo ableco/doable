@@ -5,10 +5,15 @@ import useOnClickOutside from "./useOnClickOutside";
 
 interface DatePickerProps {
   children: ReactElement;
+  initialDate?: Date;
   onChange?: (date: Date) => void;
 }
 
-function DatePicker({ children, onChange }: DatePickerProps) {
+function DatePicker({
+  children,
+  onChange,
+  initialDate = new Date(),
+}: DatePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const [referenceElement, setReferenceElement] = useState(null);
@@ -56,12 +61,7 @@ function DatePicker({ children, onChange }: DatePickerProps) {
         {...attributes.popper}
         style={{ ...styles.popper, display: isCalendarOpen ? "block" : "none" }}
       >
-        <Calendar
-          // TODO: Make this to come from a Date prop. Make the Day type an implementation
-          // detail inside calendar but this value should be a Date
-          initialDay={{ day: 27, month: 6, year: 2021, weekDay: 2 }}
-          onChange={handleChange}
-        />
+        <Calendar initialDate={initialDate} onChange={handleChange} />
       </div>
     </>
   );

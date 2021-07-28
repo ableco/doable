@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { add, addDays, format, lastDayOfMonth, subDays } from "date-fns";
+import { format } from "date-fns";
 import {
   cloneElement,
   HTMLAttributes,
@@ -11,31 +11,23 @@ import {
 } from "react";
 import ChevronLeftIcon from "./ChevronLeftIcon";
 import ChevronRightIcon from "./ChevronRightIcon";
-
-interface Month {
-  month: number;
-  year: number;
-}
-
-interface Day extends Month {
-  day: number;
-  weekDay: number;
-}
+import { getNextMonth, getPreviousMonth, Month } from "./dateUtils";
+import getDaysInMonth from "./getDaysInMonth";
+import getWeeks from "./getWeeks";
 
 interface CalendarProps {
-  initialDay: Day;
+  initialDate: Date;
   onChange: (date: Date) => void;
 }
 
-function Calendar({ initialDay, onChange }: CalendarProps) {
+function Calendar({ initialDate, onChange }: CalendarProps) {
   const [currentMonth, setCurrentMonth] = useState<Month>({
-    year: initialDay.year,
-    month: initialDay.month,
+    year: initialDate.getFullYear(),
+    month: initialDate.getMonth(),
   });
 
   const handleDaySelect = useCallback(
-    (day: Day) => {
-      const date = new Date(day.year, day.month, day.day);
+    (date: Date) => {
       if (onChange) {
         onChange(date);
       }
@@ -46,9 +38,9 @@ function Calendar({ initialDay, onChange }: CalendarProps) {
   return (
     <div
       className="shadow-lg rounded-md border border-gray-300 m-3 p-4 space-y-4 bg-white"
-      style={{
-        width: "304px",
-      }}
+      // style={{
+      //   width: "304px",
+      // }}
     >
       <Shortcuts />
       <MonthNavigation
@@ -66,11 +58,11 @@ function CalendarDay({
   currentMonth,
   onDaySelect,
 }: {
-  day: Day;
+  day: Date;
   currentMonth: Month;
-  onDaySelect: (day: Day) => void;
+  onDaySelect: (day: Date) => void;
 }) {
-  const fromADifferentMonth = currentMonth.month !== day.month;
+  const fromADifferentMonth = currentMonth.month !== day.getMonth();
   const selectDay = useCallback(() => {
     onDaySelect(day);
   }, [onDaySelect, day]);
@@ -85,128 +77,9 @@ function CalendarDay({
       )}
       onClick={selectDay}
     >
-      {day.day}
+      {day.getDate()}
     </button>
   );
-}
-
-function getDaysInMonth({ year, month }: Month): Array<Day> {
-  const firstDate = new Date(year, month, 1);
-  const dates: Array<Date> = [firstDate];
-
-  let currentDate = firstDate;
-
-  while (true) {
-    const nextDate = add(currentDate, { days: 1 });
-    if (nextDate.getMonth() !== currentDate.getMonth()) {
-      break;
-    } else {
-      currentDate = nextDate;
-      dates.push(currentDate);
-    }
-  }
-
-  return dates.map((date) => ({
-    month: date.getMonth(),
-    year: date.getFullYear(),
-    day: date.getDate(),
-    weekDay: date.getDay(),
-  }));
-}
-
-type Week = Array<Day>;
-
-function completeFirstWeek(week: Week) {
-  const fullWeek: Week = [...week];
-  const firstDay = week[0]!;
-  const previousMonth = getPreviousMonth({
-    month: firstDay.month,
-    year: firstDay.year,
-  });
-  const lastMissingDate = lastDayOfMonth(
-    new Date(previousMonth.year, previousMonth.month),
-  );
-  let lastAddedDate = lastMissingDate;
-
-  while (fullWeek.length < 7) {
-    fullWeek.unshift({
-      day: lastAddedDate.getDate(),
-      month: lastAddedDate.getMonth(),
-      year: lastAddedDate.getFullYear(),
-      weekDay: lastAddedDate.getDay(),
-    });
-    lastAddedDate = subDays(
-      new Date(
-        lastAddedDate.getFullYear(),
-        lastAddedDate.getMonth(),
-        lastAddedDate.getDate(),
-      ),
-      1,
-    );
-  }
-
-  return fullWeek;
-}
-
-function completeLastWeek(week: Week) {
-  const fullWeek: Week = [...week];
-  const lastDay = week[week.length - 1]!;
-  const nextMonth = getNextMonth({
-    month: lastDay.month,
-    year: lastDay.year,
-  });
-  const firstMissingDate = new Date(nextMonth.year, nextMonth.month, 1);
-  let lastAddedDate = firstMissingDate;
-
-  while (fullWeek.length < 7) {
-    fullWeek.push({
-      day: lastAddedDate.getDate(),
-      month: lastAddedDate.getMonth(),
-      year: lastAddedDate.getFullYear(),
-      weekDay: lastAddedDate.getDay(),
-    });
-    lastAddedDate = addDays(
-      new Date(
-        lastAddedDate.getFullYear(),
-        lastAddedDate.getMonth(),
-        lastAddedDate.getDate(),
-      ),
-      1,
-    );
-  }
-
-  return fullWeek;
-}
-
-function getWeeks(days: Array<Day>): Array<Week> {
-  const daysStack = [...days];
-
-  const firstDay = days[0]!;
-  const firstDayOfWeek = firstDay.weekDay;
-  const remainingFirstWeekDays = 7 - firstDayOfWeek;
-
-  const weeks: Array<Week> = [daysStack.splice(0, remainingFirstWeekDays)];
-
-  while (true) {
-    const middleWeek = daysStack.splice(0, 7);
-    weeks.push(middleWeek);
-    if (daysStack.length === 0) {
-      break;
-    }
-  }
-
-  const firstWeek = weeks[0];
-  const lastWeek = weeks[weeks.length - 1];
-
-  if (firstWeek && firstWeek.length < 7) {
-    weeks[0] = completeFirstWeek(firstWeek);
-  }
-
-  if (lastWeek && lastWeek.length < 7) {
-    weeks[weeks.length - 1] = completeLastWeek(lastWeek);
-  }
-
-  return weeks;
 }
 
 function MonthDays({
@@ -214,10 +87,10 @@ function MonthDays({
   onDaySelect,
 }: {
   currentMonth: Month;
-  onDaySelect: (day: Day) => void;
+  onDaySelect: (day: Date) => void;
 }) {
   const allDays = useMemo(() => {
-    return getDaysInMonth(currentMonth);
+    return getDaysInMonth(currentMonth.month, currentMonth.year);
   }, [currentMonth]);
 
   const weeks = useMemo(() => {
@@ -230,7 +103,7 @@ function MonthDays({
         return (
           <div
             key={weekIndex}
-            className="flex flex-row justify-between items-center"
+            className="flex flex-row justify-between items-center space-x-2"
           >
             {week.map((day, dayIndex) => {
               return (
@@ -255,7 +128,7 @@ const SAMPLE_YEAR = 1970;
 
 function DayHeaders() {
   return (
-    <div className="px-1.5 flex flex-row justify-between">
+    <div className="px-1.5 flex flex-row justify-between space-x-2">
       {WEEK_DAYS.map((dayOfMonth) => {
         return (
           <span key={dayOfMonth} className="text-gray-300 text-sm">
@@ -265,22 +138,6 @@ function DayHeaders() {
       })}
     </div>
   );
-}
-
-function getPreviousMonth({ month, year }: Month): Month {
-  if (month === 0) {
-    return { month: 11, year: year - 1 };
-  } else {
-    return { month: month - 1, year };
-  }
-}
-
-function getNextMonth({ month, year }: Month): Month {
-  if (month === 11) {
-    return { month: 0, year: year + 1 };
-  } else {
-    return { month: month + 1, year };
-  }
 }
 
 function MonthNavigation({
@@ -299,7 +156,7 @@ function MonthNavigation({
   }, [currentMonth, setCurrentMonth]);
 
   return (
-    <div className="flex flex-row justify-between">
+    <div className="flex flex-row justify-between space-x-2">
       <MonthNavigationButton
         icon={<ChevronLeftIcon />}
         onClick={selectPreviousMonth}
