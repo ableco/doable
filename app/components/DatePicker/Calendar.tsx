@@ -6,6 +6,7 @@ import {
   ReactElement,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -15,16 +16,23 @@ import { getNextMonth, getPreviousMonth, Month } from "./dateUtils";
 import getDaysInMonth from "./getDaysInMonth";
 import getWeeks from "./getWeeks";
 
+export type Shortcut = {
+  title: ReactNode;
+  date: Date;
+};
+
 interface CalendarProps {
-  initialDate: Date;
+  value: Date;
   onChange: (date: Date) => void;
+  shortcuts: Array<Shortcut>;
 }
 
-function Calendar({ initialDate, onChange }: CalendarProps) {
-  const [currentMonth, setCurrentMonth] = useState<Month>({
-    year: initialDate.getFullYear(),
-    month: initialDate.getMonth(),
-  });
+function Calendar({ value, onChange, shortcuts }: CalendarProps) {
+  const [currentMonth, setCurrentMonth] = useState<Month>(dateToMonth(value));
+
+  useEffect(() => {
+    setCurrentMonth(dateToMonth(value));
+  }, [value]);
 
   const handleDaySelect = useCallback(
     (date: Date) => {
@@ -36,13 +44,10 @@ function Calendar({ initialDate, onChange }: CalendarProps) {
   );
 
   return (
-    <div
-      className="shadow-lg rounded-md border border-gray-300 m-3 p-4 space-y-4 bg-white"
-      // style={{
-      //   width: "304px",
-      // }}
-    >
-      <Shortcuts />
+    <div className="shadow-lg rounded-md border border-gray-300 m-3 p-4 space-y-4 bg-white">
+      {shortcuts.length > 0 ? (
+        <Shortcuts shortcuts={shortcuts} navigateToDate={handleDaySelect} />
+      ) : null}
       <MonthNavigation
         currentMonth={currentMonth}
         setCurrentMonth={setCurrentMonth}
@@ -51,6 +56,13 @@ function Calendar({ initialDate, onChange }: CalendarProps) {
       <MonthDays currentMonth={currentMonth} onDaySelect={handleDaySelect} />
     </div>
   );
+}
+
+function dateToMonth(date: Date): Month {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+  };
 }
 
 function CalendarDay({
@@ -64,13 +76,15 @@ function CalendarDay({
 }) {
   const fromADifferentMonth = currentMonth.month !== day.getMonth();
   const selectDay = useCallback(() => {
-    onDaySelect(day);
-  }, [onDaySelect, day]);
+    if (!fromADifferentMonth) {
+      onDaySelect(day);
+    }
+  }, [onDaySelect, day, fromADifferentMonth]);
 
   return (
     <button
       className={clsx(
-        "inline-box w-full h-full text-center text-sm",
+        "inline-block w-full h-full text-center text-sm rounded-full",
         fromADifferentMonth
           ? "cursor-default text-gray-400 focus:outline-none"
           : "text-gray-900",
@@ -187,17 +201,32 @@ function MonthNavigationButton({ icon, ...props }: MonthNavigationButtonProps) {
   );
 }
 
-function Shortcuts() {
+function Shortcuts({
+  shortcuts,
+  navigateToDate,
+}: {
+  shortcuts: Array<Shortcut>;
+  navigateToDate: (date: Date) => void;
+}) {
   return (
     <div className="flex flex-row flex-wrap space-x-2">
-      <ShortcutButton>Today</ShortcutButton>
-      <ShortcutButton>Tomorrow</ShortcutButton>
-      <ShortcutButton>Next Week</ShortcutButton>
+      {shortcuts.map(({ title, date }, index) => {
+        return (
+          <ShortcutButton
+            key={index}
+            onClick={() => {
+              navigateToDate(date);
+            }}
+          >
+            {title}
+          </ShortcutButton>
+        );
+      })}
     </div>
   );
 }
 
-function ShortcutButton({ children }: { children: ReactNode }) {
+function ShortcutButton(props: HTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       className={clsx(
@@ -205,9 +234,8 @@ function ShortcutButton({ children }: { children: ReactNode }) {
         "text-indigo-700 font-medium text-xs",
         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600",
       )}
-    >
-      {children}
-    </button>
+      {...props}
+    />
   );
 }
 
