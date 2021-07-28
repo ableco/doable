@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@ableco/abledev-components": "0.0.1-alpha10",
+    "@ableco/abledev-components": "0.0.1-alpha11",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@popperjs/core": "2.9.2",

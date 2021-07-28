@@ -1,4 +1,4 @@
-import { Button, Center } from "@ableco/abledev-components";
+import { Button, Center, TextInput } from "@ableco/abledev-components";
 import DatePicker from "app/components/DatePicker";
 import protectPage from "app/core/helpers/protectPage";
 import Layout from "app/core/layouts/Layout";
@@ -13,6 +13,9 @@ const CalendarPage: BlitzPage = () => {
 
   return (
     <Center>
+      <div className="mb-2">
+        <TextInput label="Hello World" hideLabel placeholder="Hello World" />
+      </div>
       <DatePicker
         value={selectedDate}
         onChange={setSelectedDate}

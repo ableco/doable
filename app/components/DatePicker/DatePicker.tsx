@@ -1,7 +1,9 @@
+import { useUniqueId } from "@ableco/abledev-components";
 import { cloneElement, ReactElement, useCallback, useState } from "react";
 import { usePopper } from "react-popper";
 import Calendar, { CalendarProps } from "./Calendar";
-import useOnClickOutside from "./useOnClickOutside";
+import { isElementOutside } from "./domUtils";
+import useWindowEvent from "./useWindowEvent";
 
 interface DatePickerProps {
   children: ReactElement;
@@ -20,7 +22,8 @@ function DatePicker({
 }: DatePickerProps) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const [referenceElement, setReferenceElement] = useState(null);
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLDivElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
     null,
   );
@@ -38,11 +41,33 @@ function DatePicker({
     }
   }, [isCalendarOpen, update]);
 
-  useOnClickOutside(popperElement, referenceElement, function closeCalendar() {
-    if (isCalendarOpen) {
-      setIsCalendarOpen(false);
-    }
+  const closeIfOutside = useCallback(
+    (element: HTMLElement) => {
+      if (popperElement && referenceElement && isCalendarOpen) {
+        const isOutside = isElementOutside(
+          element,
+          popperElement,
+          referenceElement,
+        );
+        if (isOutside) {
+          setIsCalendarOpen(false);
+        }
+      }
+    },
+    [popperElement, referenceElement, isCalendarOpen],
+  );
+
+  useWindowEvent("mousedown", function closeOnOutsideClick({ target }) {
+    closeIfOutside(target as HTMLElement);
   });
+
+  useWindowEvent(
+    "focus",
+    function closeOnOutsideFocus({ target }) {
+      closeIfOutside(target as HTMLElement);
+    },
+    true,
+  );
 
   const handleChange = useCallback(
     (date: Date) => {
@@ -54,13 +79,18 @@ function DatePicker({
     [onChange],
   );
 
+  const panelId = useUniqueId("calendar-");
+
   return (
     <>
       {cloneElement(children, {
         ref: setReferenceElement,
         onClick: toggleCalendar,
+        "aria-controls": panelId,
+        "aria-expanded": isCalendarOpen,
       })}
       <div
+        id={panelId}
         ref={setPopperElement}
         {...attributes.popper}
         style={{ ...styles.popper, display: isCalendarOpen ? "block" : "none" }}

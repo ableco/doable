@@ -146,6 +146,7 @@ function CalendarDay({
         { ["cursor-default"]: isDisabled },
         { ["focus:ring-indigo-500 focus:ring-2"]: !isDisabled },
       )}
+      {...(isDisabled ? { "aria-hidden": true, tabIndex: -1 } : {})}
       onClick={selectDay}
     >
       {day.getDate()}

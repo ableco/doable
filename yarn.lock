@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ableco/abledev-components@0.0.1-alpha10":
-  version "0.0.1-alpha10"
-  resolved "https://registry.able.co/@ableco%2fabledev-components/-/abledev-components-0.0.1-alpha10.tgz#3c9a298ceee0fc65f395beca7b4f46a859911733"
-  integrity sha512-ztDbhB2IuPlt05gE5mwGlblEGoK93vmNV52gHtARubwModMfYuCRI189B/euhZS7oge52uzFFYau+0t9lQCcvw==
+"@ableco/abledev-components@0.0.1-alpha11":
+  version "0.0.1-alpha11"
+  resolved "https://registry.able.co/@ableco%2fabledev-components/-/abledev-components-0.0.1-alpha11.tgz#feb5767cc8744f6cb10b41c7f2e011f826377ef0"
+  integrity sha512-SHajsF55cB3+Y8Doi397OdZ2D7pE/J4mcC5qk9aPCUb/9Eo0NM5Y0BAeNopoO6JGN6y8jG8OUUG4hqiN/XDv8Q==
   dependencies:
     "@headlessui/react" "^1.3.0"
     clsx "^1.1.1"
