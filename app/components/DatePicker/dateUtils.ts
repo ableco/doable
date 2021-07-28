@@ -1,3 +1,5 @@
+import { addDays, format, startOfWeek } from "date-fns";
+
 export type Month = {
   month: number;
   year: number;
@@ -19,4 +21,11 @@ function getNextMonth({ month, year }: Month): Month {
   }
 }
 
-export { getPreviousMonth, getNextMonth };
+function getShortWeekDays() {
+  const firstDayOfWeek = startOfWeek(new Date());
+  return Array.from(new Array(7)).map((_, days) =>
+    format(addDays(firstDayOfWeek, days), "EEEEEE"),
+  );
+}
+
+export { getPreviousMonth, getNextMonth, getShortWeekDays };

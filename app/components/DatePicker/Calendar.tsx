@@ -12,7 +12,12 @@ import {
 } from "react";
 import ChevronLeftIcon from "./ChevronLeftIcon";
 import ChevronRightIcon from "./ChevronRightIcon";
-import { getNextMonth, getPreviousMonth, Month } from "./dateUtils";
+import {
+  getNextMonth,
+  getPreviousMonth,
+  getShortWeekDays,
+  Month,
+} from "./dateUtils";
 import getDaysInMonth from "./getDaysInMonth";
 import getWeeks from "./getWeeks";
 
@@ -150,16 +155,15 @@ function MonthDays({
   );
 }
 
-const WEEK_DAYS = [1, 2, 3, 4, 5, 6, 7];
-const SAMPLE_YEAR = 1970;
+const SHORT_WEEK_DAYS = getShortWeekDays();
 
 function DayHeaders() {
   return (
     <div className="px-1.5 flex flex-row justify-between space-x-2">
-      {WEEK_DAYS.map((dayOfMonth) => {
+      {SHORT_WEEK_DAYS.map((weekDay) => {
         return (
-          <span key={dayOfMonth} className="text-gray-300 text-sm">
-            {format(new Date(SAMPLE_YEAR, dayOfMonth), "EEEEEE")}
+          <span key={weekDay} className="text-gray-300 text-sm">
+            {weekDay}
           </span>
         );
       })}
