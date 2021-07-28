@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { format } from "date-fns";
+import { format, isSameDay, isToday } from "date-fns";
 import {
   cloneElement,
   HTMLAttributes,
@@ -53,7 +53,11 @@ function Calendar({ value, onChange, shortcuts }: CalendarProps) {
         setCurrentMonth={setCurrentMonth}
       />
       <DayHeaders />
-      <MonthDays currentMonth={currentMonth} onDaySelect={handleDaySelect} />
+      <MonthDays
+        currentMonth={currentMonth}
+        onDaySelect={handleDaySelect}
+        selectedDate={value}
+      />
     </div>
   );
 }
@@ -69,10 +73,12 @@ function CalendarDay({
   day,
   currentMonth,
   onDaySelect,
+  selectedDate,
 }: {
   day: Date;
   currentMonth: Month;
   onDaySelect: (day: Date) => void;
+  selectedDate: Date;
 }) {
   const fromADifferentMonth = currentMonth.month !== day.getMonth();
   const selectDay = useCallback(() => {
@@ -81,13 +87,19 @@ function CalendarDay({
     }
   }, [onDaySelect, day, fromADifferentMonth]);
 
+  const isSelected = isSameDay(day, selectedDate);
+
   return (
     <button
       className={clsx(
         "inline-block w-full h-full text-center text-sm rounded-full",
         fromADifferentMonth
           ? "cursor-default text-gray-400 focus:outline-none"
+          : isSelected
+          ? ""
           : "text-gray-900",
+        isToday(day) ? "bg-gray-100" : "",
+        isSelected ? "bg-indigo-600 text-white" : "",
       )}
       onClick={selectDay}
     >
@@ -99,9 +111,11 @@ function CalendarDay({
 function MonthDays({
   currentMonth,
   onDaySelect,
+  selectedDate,
 }: {
   currentMonth: Month;
   onDaySelect: (day: Date) => void;
+  selectedDate: Date;
 }) {
   const allDays = useMemo(() => {
     return getDaysInMonth(currentMonth.month, currentMonth.year);
@@ -126,6 +140,7 @@ function MonthDays({
                     day={day}
                     currentMonth={currentMonth}
                     onDaySelect={onDaySelect}
+                    selectedDate={selectedDate}
                   />
                 </div>
               );
