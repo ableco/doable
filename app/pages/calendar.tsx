@@ -11,7 +11,7 @@ const CalendarPage: BlitzPage = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   return (
-    <Center className="space-y-2">
+    <Center>
       <DatePicker
         value={selectedDate}
         onChange={setSelectedDate}
@@ -23,7 +23,7 @@ const CalendarPage: BlitzPage = () => {
       >
         <Button>Pick a Date</Button>
       </DatePicker>
-      <div>
+      <div className="mt-2">
         {selectedDate ? (
           <>Selecte Date: {format(selectedDate, "cccc, MMMM dd, yyyy")}</>
         ) : null}

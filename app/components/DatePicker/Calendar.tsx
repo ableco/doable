@@ -82,10 +82,8 @@ function CalendarDay({
 }) {
   const fromADifferentMonth = currentMonth.month !== day.getMonth();
   const selectDay = useCallback(() => {
-    if (!fromADifferentMonth) {
-      onDaySelect(day);
-    }
-  }, [onDaySelect, day, fromADifferentMonth]);
+    onDaySelect(day);
+  }, [onDaySelect, day]);
 
   const isSelected = isSameDay(day, selectedDate);
 
@@ -94,10 +92,10 @@ function CalendarDay({
       className={clsx(
         "inline-block w-full h-full text-center text-sm rounded-full",
         fromADifferentMonth
-          ? "cursor-default text-gray-400 focus:outline-none"
-          : isSelected
-          ? ""
-          : "text-gray-900",
+          ? "text-gray-400"
+          : !isSelected
+          ? "text-gray-900"
+          : "",
         isToday(day) ? "bg-gray-100" : "",
         isSelected ? "bg-indigo-600 text-white" : "",
       )}
