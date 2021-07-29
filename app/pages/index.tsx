@@ -30,10 +30,7 @@ const Home: BlitzPage = () => {
   return (
     <div
       className="mt-14 mx-auto flex flex-col justify-center space-y-4"
-      style={{
-        // TODO: "width: 500" is not in the normal tailwind classes
-        width: 500,
-      }}
+      style={{ width: 500 }}
     >
       <CreateTaskForm />
       <TasksList hideCompletedTasks={hideCompletedTasks} />
