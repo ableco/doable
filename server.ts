@@ -5,7 +5,6 @@ import { log } from "@blitzjs/display";
 import { initIO, setupRoomsOnConnection } from "io";
 // @ts-ignore
 import handleAbledevRequest from "due-date/dist/backend/handleRequest.cjs";
-import path from "path";
 
 const { PORT = "3000" } = process.env;
 const dev = process.env.NODE_ENV !== "production";
@@ -16,9 +15,7 @@ app.prepare().then(() => {
   const server = createServer((req, res) => {
     const parsedUrl = parse(req.url!, true);
     if (parsedUrl.pathname?.startsWith("/abledev")) {
-      handleAbledevRequest(req, res, {
-        srcPath: path.resolve("./node_modules/due-dates/dist"),
-      });
+      handleAbledevRequest(req, res);
     } else {
       handle(req, res, parsedUrl);
     }
