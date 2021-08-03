@@ -34,6 +34,7 @@
     "autoprefixer": "10",
     "blitz": "0.38.5",
     "date-fns": "2.23.0",
+    "due-date": "file:.yalc/due-date",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21",
     "passport-google-oauth": "2.0.0",

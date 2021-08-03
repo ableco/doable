@@ -7,6 +7,7 @@ import createTask from "app/tasks/mutations/createTask";
 import listTasks from "app/tasks/queries/listTasks";
 import TaskComponent from "app/components/Task";
 import { io } from "socket.io-client";
+import { DueDate } from "due-date";
 
 const Home: BlitzPage = () => {
   const [hideCompletedTasks, setHideCompleteTasks] = useState(true);
@@ -32,6 +33,7 @@ const Home: BlitzPage = () => {
       className="mt-14 mx-auto flex flex-col justify-center space-y-4"
       style={{ width: 500 }}
     >
+      <DueDate />
       <CreateTaskForm />
       <TasksList hideCompletedTasks={hideCompletedTasks} />
       <p className="text-center">
