@@ -3,14 +3,17 @@ import { createServer } from "http";
 import { parse } from "url";
 import { log } from "@blitzjs/display";
 import { initIO, setupRoomsOnConnection } from "io";
-import { createHandleRequest } from "due-date/dist/due-date.node";
+// In the future this line won't be needed because of
+// https://github.com/microsoft/TypeScript/issues/33079
+// @ts-ignore
+import { createHandleRequest } from "due-date/server-functions";
 
 const { PORT = "3000" } = process.env;
 const dev = process.env.NODE_ENV !== "production";
 const app = blitz({ dev });
 const handle = app.getRequestHandler();
 
-const handleAbledevRequest = createHandleRequest({ mode: "production" });
+const handleAbledevRequest = createHandleRequest();
 
 app.prepare().then(() => {
   const server = createServer((req, res) => {
