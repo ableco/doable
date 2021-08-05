@@ -3,13 +3,14 @@ import { createServer } from "http";
 import { parse } from "url";
 import { log } from "@blitzjs/display";
 import { initIO, setupRoomsOnConnection } from "io";
-// @ts-ignore
-import handleAbledevRequest from "due-date/dist/backend/handleRequest.cjs";
+import { createHandleRequest } from "due-date/dist/due-date.node";
 
 const { PORT = "3000" } = process.env;
 const dev = process.env.NODE_ENV !== "production";
 const app = blitz({ dev });
 const handle = app.getRequestHandler();
+
+const handleAbledevRequest = createHandleRequest({ mode: "production" });
 
 app.prepare().then(() => {
   const server = createServer((req, res) => {
