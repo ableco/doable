@@ -2,7 +2,8 @@ import { Avatar, CheckboxInput } from "@ableco/abledev-components";
 import toggleTask from "app/tasks/mutations/toggleTask";
 import listTasks, { ListedTask } from "app/tasks/queries/listTasks";
 import { invalidateQuery, useMutation } from "blitz";
-import { format } from "date-fns";
+import "due-date/styles.css";
+import { DueDate } from "due-date";
 
 function Task({ task }: { task: ListedTask }) {
   const [toggleTaskMutation] = useMutation(toggleTask, {
@@ -13,8 +14,6 @@ function Task({ task }: { task: ListedTask }) {
     toggleTaskMutation({ id: task.id });
   };
 
-  const handleDateClick = () => {};
-
   return (
     <div className="flex justify-between">
       <CheckboxInput
@@ -23,14 +22,7 @@ function Task({ task }: { task: ListedTask }) {
         onChange={toggleCompletion}
         description={
           <span className="block text-xs text-gray-400 mt-1">
-            {/* NOTE: This button should be THE job request */}
-            <button onClick={handleDateClick}>
-              {task.dueDate ? (
-                format(task.dueDate, "MMMM dd")
-              ) : (
-                <span className="underline">Add Date</span>
-              )}
-            </button>
+            <DueDate task={task} />
           </span>
         }
       />
