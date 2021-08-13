@@ -22,7 +22,12 @@ function Task({ task }: { task: ListedTask }) {
         onChange={toggleCompletion}
         description={
           <span className="block text-xs text-gray-400 mt-1">
-            <DueDate task={task} />
+            <DueDate
+              task={task}
+              onSuccess={() => {
+                invalidateQuery(listTasks);
+              }}
+            />
           </span>
         }
       />
