@@ -2,8 +2,8 @@ import { Avatar, CheckboxInput } from "@ableco/abledev-components";
 import toggleTask from "app/tasks/mutations/toggleTask";
 import listTasks, { ListedTask } from "app/tasks/queries/listTasks";
 import { invalidateQuery, useMutation } from "blitz";
-import "due-date/styles.css";
 import { DueDate } from "due-date";
+import "due-date/styles.css";
 
 function Task({ task }: { task: ListedTask }) {
   const [toggleTaskMutation] = useMutation(toggleTask, {
