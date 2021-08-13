@@ -7,13 +7,17 @@ import { initIO, setupRoomsOnConnection } from "io";
 // https://github.com/microsoft/TypeScript/issues/33079
 // @ts-ignore
 import { createHandleRequest } from "due-date/server-functions";
+import db from "db";
 
 const { PORT = "3000" } = process.env;
 const dev = process.env.NODE_ENV !== "production";
 const app = blitz({ dev });
 const handle = app.getRequestHandler();
 
-const handleAbledevRequest = createHandleRequest();
+const handleAbledevRequest = createHandleRequest({
+  mode: "production",
+  hostContext: { db },
+});
 
 app.prepare().then(() => {
   const server = createServer((req, res) => {
