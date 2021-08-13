@@ -82,7 +82,7 @@ function CreateTaskForm() {
 }
 
 function TasksList({ hideCompletedTasks }: { hideCompletedTasks: boolean }) {
-  const [tasks] = useQuery(listTasks, { xyz: "1" });
+  const [tasks] = useQuery(listTasks, {});
 
   const filteredTasks = useMemo(() => {
     if (hideCompletedTasks) {
