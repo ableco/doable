@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = ""
+}
+
+model User {
+  id             Int          @id @default(autoincrement())
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  name           String?
+  email          String       @unique
+  hashedPassword String?
+  role           String       @default("USER")
+  picture        String?
+  organizationId Int
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  sessions       Session[]
+  assignedTasks  Task[]       @relation("AssignedUser")
+  createdTasks   Task[]       @relation("Creator")
+  tokens         Token[]
+}
+
+model Session {
+  id                 Int       @id @default(autoincrement())
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  expiresAt          DateTime?
+  handle             String    @unique
+  hashedSessionToken String?
+  antiCSRFToken      String?
+  publicData         String?
+  privateData        String?
+  userId             Int?
+  user               User?     @relation(fields: [userId], references: [id])
+}
+
+model Organization {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  domain    String   @unique
+  users     User[]
+}
+
+model Token {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  hashedToken String
+  expiresAt   DateTime
+  sentTo      String
+  userId      Int
+  type        TokenType
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@unique([hashedToken, type], name: "Token.hashedToken_type_unique")
+}
+
+model Task {
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  description    String
+  dueDate        DateTime?
+  assignedUserId Int?
+  creatorId      Int
+  completedAt    DateTime?
+  assignedUser   User?     @relation("AssignedUser", fields: [assignedUserId], references: [id])
+  creator        User      @relation("Creator", fields: [creatorId], references: [id])
+  SubTask        SubTask[]
+}
+
+enum TokenType {
+  RESET_PASSWORD
+}
+
+model SubTask {
+  id          Int    @id @default(autoincrement())
+  description String
+  task        Task   @relation(fields: [taskId], references: [id])
+  taskId      Int
+}
+
+model TestA {
+  id          Int    @id @default(autoincrement())
+  description String
+}
+
+model TestB {
+  id          Int    @id @default(autoincrement())
+  description String
+}

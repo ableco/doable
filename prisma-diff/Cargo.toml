@@ -1,0 +1,10 @@
+[package]
+name = "prisma-diff"
+version = "0.1.0"
+authors = ["Ricardo Díaz <ricardo@able.co>"]
+edition = "2018"
+
+[dependencies]
+migration-core = { git = "https://github.com/prisma/prisma-engines", features = ["sql", "sql-migration-connector"] }
+futures = { version = "0.3", features = ["executor"] }
+tokio = { version = "1.0", default-features = false, features = ["macros"] }
