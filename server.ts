@@ -7,7 +7,7 @@ import db from "db";
 // In the future this line won't be needed because of
 // https://github.com/microsoft/TypeScript/issues/33079
 // @ts-ignore
-import { createHandleRequest } from "due-date/server-functions";
+import { createHandleRequest } from "@ableco/job-request--due-date/server-functions";
 import express from "express";
 import { createServer } from "http";
 import { initIO, setupRoomsOnConnection } from "io";

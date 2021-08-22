@@ -24,8 +24,10 @@
     ]
   },
   "dependencies": {
+    "@ableco/abledev-cli": "0.0.7",
     "@ableco/abledev-components": "0.0.1-alpha15",
-    "@ableco/abledev-dev-environment": "0.0.1-alpha21",
+    "@ableco/abledev-dev-environment": "0.0.7",
+    "@ableco/job-request--due-date": "0.0.1",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@prisma/client": "2.27.0",
@@ -36,7 +38,6 @@
     "blitz": "0.38.5",
     "cookie-parser": "1.4.5",
     "date-fns": "2.23.0",
-    "due-date": "file:.yalc/due-date",
     "express": "4.17.1",
     "lodash": "4.17.21",
     "lodash-es": "4.17.21",
