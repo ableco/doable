@@ -26,7 +26,6 @@
   "dependencies": {
     "@ableco/abledev-cli": "0.0.7",
     "@ableco/abledev-components": "0.0.1-alpha15",
-    "@ableco/abledev-dev-environment": "0.0.7",
     "@ableco/job-request--due-date": "0.0.1",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",

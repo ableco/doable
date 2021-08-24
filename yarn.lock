@@ -34,7 +34,7 @@
     react-popper "^2.2.5"
     uuid "^8.0.0"
 
-"@ableco/abledev-dev-environment@0.0.7", "@ableco/abledev-dev-environment@v0.0.7":
+"@ableco/abledev-dev-environment@v0.0.7":
   version "0.0.7"
   resolved "https://registry.able.co/@ableco%2fabledev-dev-environment/-/abledev-dev-environment-0.0.7.tgz#0ec00b53ecbc61b8cb4111d4a3998065c6627043"
   integrity sha512-LtRQEytUENpCP+ij1PMbwBIwf8+e2EFwc+bc/ZLbFCi+yFmmUtCCxDaW3rSCLpZYn/bY+P3PHEIzhEzDpYg6aw==
