@@ -3,7 +3,7 @@ import toggleTask from "app/tasks/mutations/toggleTask";
 import listTasks, { ListedTask } from "app/tasks/queries/listTasks";
 import { invalidateQuery, useMutation } from "blitz";
 import { DueDate } from "@ableco/job-request--due-date";
-import "@ableco/job-request--due-date/styles.css";
+import "@ableco/job-request--due-date/dist/styles.css";
 
 function Task({ task }: { task: ListedTask }) {
   const [toggleTaskMutation] = useMutation(toggleTask, {

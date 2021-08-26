@@ -3,16 +3,16 @@ import { getSession } from "blitz";
 import blitz from "blitz/custom-server";
 import cookieParser from "cookie-parser";
 import db from "db";
-// In the future this line won't be needed because of
-// https://github.com/microsoft/TypeScript/issues/33079
-// @ts-ignore
-import { createHandleRequest } from "@ableco/job-request--due-date/server-functions";
+import {
+  createHandleRequest,
+  HostContext,
+} from "@ableco/job-request--due-date/dist/server-functions";
 import express, { Request, RequestHandler, Response } from "express";
 import { createServer } from "http";
 import { initIO, setupRoomsOnConnection } from "io";
 import { parse } from "url";
 
-const handleAbledevRequest = createHandleRequest({
+const handleAbledevRequest = createHandleRequest<HostContext>({
   mode: "production",
   hostContext: {
     db,
