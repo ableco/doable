@@ -24,9 +24,10 @@
     ]
   },
   "dependencies": {
+    "@ableco/abledev-app-environment": "0.0.26",
     "@ableco/abledev-cli": "0.0.7",
     "@ableco/abledev-components": "0.0.1-alpha15",
-    "@ableco/job-request--due-date": "0.0.5",
+    "@ableco/job-request--due-date": "0.0.7",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
     "@prisma/client": "2.27.0",
