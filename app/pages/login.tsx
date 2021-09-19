@@ -1,4 +1,4 @@
-import { Button, Center } from "@ableco/abledev-components";
+import { Button, Center } from "@abledotdev/ui";
 import { GetServerSideProps, getSession } from "blitz";
 
 function LoginPage({ redirectUrl }: { redirectUrl: string }) {

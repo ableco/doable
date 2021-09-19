@@ -1,7 +1,7 @@
 import { BlitzPage, invalidateQuery, useMutation, useQuery } from "blitz";
 import Layout from "app/core/layouts/Layout";
 import protectPage from "app/core/helpers/protectPage";
-import { ListContainer, TextInput } from "@ableco/abledev-components";
+import { ListContainer, TextInput } from "@abledotdev/ui";
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import createTask from "app/tasks/mutations/createTask";
 import listTasks from "app/tasks/queries/listTasks";

@@ -1,4 +1,4 @@
-import "@ableco/abledev-components/dist/style.css";
+import "@abledotdev/ui/dist/style.css";
 import "app/core/styles/index.css";
 import {
   AppProps,

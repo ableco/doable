@@ -1,9 +1,9 @@
-import { Avatar, CheckboxInput } from "@ableco/abledev-components";
+import { Avatar, CheckboxInput } from "@abledotdev/ui";
 import toggleTask from "app/tasks/mutations/toggleTask";
 import listTasks, { ListedTask } from "app/tasks/queries/listTasks";
 import { invalidateQuery, useMutation } from "blitz";
-import { DueDate } from "@ableco/job-request--due-date";
-import "@ableco/job-request--due-date/dist/styles.css";
+// import { DueDate } from "@ableco/job-request--due-date";
+// import "@ableco/job-request--due-date/dist/styles.css";
 
 function Task({ task }: { task: ListedTask }) {
   const [toggleTaskMutation] = useMutation(toggleTask, {
@@ -22,12 +22,12 @@ function Task({ task }: { task: ListedTask }) {
         onChange={toggleCompletion}
         description={
           <span className="block text-xs text-gray-400 mt-1">
-            <DueDate
+            {/* <DueDate
               task={task}
               onSuccess={() => {
                 invalidateQuery(listTasks);
               }}
-            />
+            /> */}
           </span>
         }
       />

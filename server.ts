@@ -1,5 +1,4 @@
 import { log } from "@blitzjs/display";
-import abledevMiddleware from "abledev-middleware";
 import blitz from "blitz/custom-server";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -17,7 +16,6 @@ async function startServer() {
 
   const expressServer = express();
   expressServer.use(cookieParser());
-  expressServer.use(abledevMiddleware);
 
   expressServer.use(async (request, response) => {
     const parsedUrl = parse(request.url!, true);
