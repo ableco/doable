@@ -5,6 +5,7 @@ import express from "express";
 import { createServer } from "http";
 import { initIO, setupRoomsOnConnection } from "io";
 import { parse } from "url";
+import abledevMiddleware from "abledev-middleware";
 
 const { PORT = "3000" } = process.env;
 const dev = process.env.NODE_ENV !== "production";
@@ -16,6 +17,7 @@ async function startServer() {
 
   const expressServer = express();
   expressServer.use(cookieParser());
+  expressServer.use(abledevMiddleware);
 
   expressServer.use(async (request, response) => {
     const parsedUrl = parse(request.url!, true);

@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "@abledotdev/able--doable--due-date": "3.0.0",
     "@abledotdev/ui": "0.0.1-alpha17",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
@@ -49,6 +50,7 @@
     "zod": "3.5.1"
   },
   "devDependencies": {
+    "@abledotdev/app-environment": "0.0.39",
     "@types/cookie-parser": "1.4.2",
     "@types/express": "4.17.13",
     "@types/preview-email": "2.0.1",
