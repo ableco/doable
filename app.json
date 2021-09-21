@@ -8,13 +8,13 @@
   "description": "",
   "env": {
     "GOOGLE_CALLBACK_URL": {
-      "required": false
+      "required": true
     },
     "GOOGLE_CLIENT_ID": {
-      "required": false
+      "required": true
     },
     "GOOGLE_CLIENT_SECRET": {
-      "required": false
+      "required": true
     },
     "SESSION_SECRET_KEY": {
       "generator": "secret"
