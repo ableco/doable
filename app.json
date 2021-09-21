@@ -1,7 +1,5 @@
 {
-  "addons": [
-    "heroku-postgresql"
-  ],
+  "addons": ["heroku-postgresql"],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
@@ -10,13 +8,13 @@
   "description": "",
   "env": {
     "GOOGLE_CALLBACK_URL": {
-      "required": true
+      "required": false
     },
     "GOOGLE_CLIENT_ID": {
-      "required": true
+      "required": false
     },
     "GOOGLE_CLIENT_SECRET": {
-      "required": true
+      "required": false
     },
     "SESSION_SECRET_KEY": {
       "generator": "secret"
