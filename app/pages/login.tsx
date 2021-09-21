@@ -28,7 +28,19 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
-  const redirectUrl = query.redirectUrl ?? "/";
+  // Sometimes next can redirect to a .json url :S
+  let redirectUrl = "/";
+
+  if (Array.isArray(query.redirectUrl)) {
+    redirectUrl = query.redirectUrl[0]!;
+  } else if (typeof query.redirectUrl === "string") {
+    redirectUrl = query.redirectUrl;
+  }
+
+  if (redirectUrl.endsWith(".json")) {
+    redirectUrl = "/";
+  }
+
   return { props: { redirectUrl } };
 };
 
