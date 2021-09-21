@@ -7,7 +7,10 @@ export default passportAuth({
   errorRedirectUrl: "/",
   strategies: [
     {
-      authenticateOptions: { scope: "email profile" },
+      authenticateOptions: {
+        scope: "email profile",
+        state: process.env.HEROKU_APP_NAME,
+      },
       strategy: new GoogleStrategy(
         {
           clientID: process.env.GOOGLE_CLIENT_ID!,
