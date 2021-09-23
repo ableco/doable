@@ -12,6 +12,7 @@ const listTasks = resolver.pipe(
       },
       include: {
         assignedUser: { select: { picture: true } },
+        priority: true,
       },
     });
 
@@ -27,6 +28,7 @@ const listTasks = resolver.pipe(
     const sortedIncompleteTasks = orderBy(
       incompleteTasks,
       [
+        (task) => task.priority?.rank ?? -1,
         (task) => !!task.dueDate,
         (task) => task.assignedUserId === session.userId,
         (task) => task.dueDate,
@@ -38,11 +40,12 @@ const listTasks = resolver.pipe(
     const sortedCompleteTasks = orderBy(
       completeTasks,
       [
+        (task) => task.priority?.rank ?? -1,
         (task) => task.assignedUserId === session.userId,
         (task) => task.completedAt,
         (task) => task.createdAt,
       ],
-      ["desc", "asc", "asc"],
+      ["desc", "desc", "asc", "asc"],
     );
 
     return [...sortedIncompleteTasks, ...sortedCompleteTasks];

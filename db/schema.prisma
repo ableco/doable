@@ -83,4 +83,16 @@ model Task {
   assignedUserId Int?
   creator        User      @relation("Creator", fields: [creatorId], references: [id])
   creatorId      Int
+  priority       Priority? @relation(fields: [priorityId], references: [id])
+  priorityId     Int?
+}
+
+model Priority {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  color     String
+  rank      Int
+  tasks     Task[]
 }
