@@ -24,6 +24,8 @@
     ]
   },
   "dependencies": {
+    "@abledotdev/able--doable--due-date": "4.0.0",
+    "@abledotdev/app-environment": "0.0.39",
     "@abledotdev/ui": "0.0.1-alpha17",
     "@heroicons/react": "1.0.2",
     "@hookform/resolvers": "2.6.1",
