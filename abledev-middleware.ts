@@ -1,5 +1,5 @@
 import { createMiddleware } from "@abledotdev/app-environment";
-import * as DueDate from "@abledotdev/able--doable--due-date/dist/server-functions";
+// import * as SampleFeatureRequest from "@abledotdev/able--doable--sample-feature-request/dist/server-functions";
 import { getSession } from "@blitzjs/core/server";
 import db from "db";
 import { Request, Response } from "express";
@@ -18,9 +18,9 @@ const sharedHostContext = { db, authenticate };
 
 export default createMiddleware({
   serverFunctions: [
-    DueDate.createHandleRequest<DueDate.HostContext>({
-      mode: "production",
-      hostContext: sharedHostContext,
-    }),
+    // SampleFeatureRequest.createHandleRequest<SampleFeatureRequest.HostContext>({
+    //   mode: "production",
+    //   hostContext: sharedHostContext,
+    // }),
   ],
 });

@@ -2,26 +2,6 @@
 # yarn lockfile v1
 
 
-"@abledotdev/able--doable--due-date@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.able.dev/@abledotdev%2fable--doable--due-date/-/able--doable--due-date-4.0.0.tgz#83b9ff126d5c4622f7466228286af0a051a7572f"
-  integrity sha512-rC7j9tbYTRGoZaZJmOIJphDP3FoP4jfOwrPxut9zw0HNxiq0fbGUPqWxEGrsxm6Rwh2XM0lfjMD4OWbvX7lRPA==
-  dependencies:
-    "@abledotdev/abledev-react" "^0.0.41"
-    "@abledotdev/dev-environment" "^0.0.41"
-    "@abledotdev/ui" "^0.0.1-alpha17"
-    "@prisma/client" "3.1.1"
-    date-fns "^2.24.0"
-    express "^4.17.1"
-
-"@abledotdev/abledev-react@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.able.dev/@abledotdev%2fabledev-react/-/abledev-react-0.0.41.tgz#9833bf66b9a087ae5313cc31c972dfd9328ecb15"
-  integrity sha512-t4EKvsqNvsoEL6HHO4zXQ4OzIzX36Rt325HsxddXM+oLCS9nBJ9J1btUq9RpsUQEmEPk+V+g8T9fwZLClEmP1A==
-  dependencies:
-    react-query "^3.19.2"
-    superjson "^1.7.5"
-
 "@abledotdev/app-environment@0.0.39":
   version "0.0.39"
   resolved "https://registry.able.dev/@abledotdev%2fapp-environment/-/app-environment-0.0.39.tgz#17466899bdcd85e8b62058a583f636d0512f2da5"
@@ -64,40 +44,7 @@
     webpack-merge "^5.8.0"
     webpack-node-externals "^3.0.0"
 
-"@abledotdev/dev-environment@^0.0.41":
-  version "0.0.41"
-  resolved "https://registry.able.dev/@abledotdev%2fdev-environment/-/dev-environment-0.0.41.tgz#0f445220839ca21fa618485fa72ab3d247204a7a"
-  integrity sha512-AD0fSpBF8yIYo2MqIZ3HQwYJgRimrWcb8PSxvk4+g2L7raF6U+UZ5xwm73Dfy6CmxQnST3xO7PUmjqxYsXL3QA==
-  dependencies:
-    "@pmmmwh/react-refresh-webpack-plugin" "^0.4.3"
-    "@types/glob" "^7.1.4"
-    "@types/minimist" "^1.2.2"
-    "@types/morgan" "^1.9.3"
-    "@types/webpack-dev-middleware" "^5.0.2"
-    "@types/webpack-hot-middleware" "^2.25.5"
-    cors "^2.8.5"
-    css-loader "^6.2.0"
-    express "^4.17.1"
-    express-async-errors "^3.1.1"
-    express-async-handler "^1.1.4"
-    glob "^7.1.7"
-    html-webpack-plugin "^5.3.2"
-    make-dir "^3.1.0"
-    mini-css-extract-plugin "^2.2.0"
-    minimist "^1.2.5"
-    morgan "^1.10.0"
-    postcss-loader "^6.1.1"
-    react-refresh "^0.10.0"
-    react-refresh-typescript "^2.0.2"
-    shebang-loader "^0.0.1"
-    style-loader "^3.2.1"
-    superjson "^1.7.5"
-    webpack-dev-middleware "^5.0.0"
-    webpack-hot-middleware "^2.25.0"
-    webpack-merge "^5.8.0"
-    webpack-node-externals "^3.0.0"
-
-"@abledotdev/ui@0.0.1-alpha17", "@abledotdev/ui@^0.0.1-alpha17":
+"@abledotdev/ui@0.0.1-alpha17":
   version "0.0.1-alpha17"
   resolved "https://registry.able.dev/@abledotdev%2fui/-/ui-0.0.1-alpha17.tgz#944fd75efd08e37e23577da98799b2d93244dd64"
   integrity sha512-HMcjxPlTX6kUTgBSEflEbeZi3AbbiTj9JaLKSq+epf5xw/GWqFI7DsDJGPK+91z1xVeFA2RteaivzfJNQeOa/Q==
@@ -1311,13 +1258,6 @@
   dependencies:
     "@prisma/engines-version" "2.27.0-43.cdba6ec525e0213cce26f8e4bb23cf556d1479bb"
 
-"@prisma/client@3.1.1":
-  version "3.1.1"
-  resolved "https://registry.able.dev/@prisma%2fclient/-/client-3.1.1.tgz#f4012631528049c22d12b212846dcf503db33cfe"
-  integrity sha512-8ud8vVFMIg37yrkZ4wPpjKoMxFbCL0Pesq5eyLnag/s0LTKsVEN7ZBIQq9JzWW+AUqOzGKXr2Jt4Sl8xdGI99w==
-  dependencies:
-    "@prisma/engines-version" "3.1.0-24.c22652b7e418506fab23052d569b85d3aec4883f"
-
 "@prisma/debug@2.19.0":
   version "2.19.0"
   resolved "https://registry.able.dev/@prisma%2fdebug/-/debug-2.19.0.tgz#5d9c6b9deb0d5214360ee23644c4e40bee0f251d"
@@ -1348,11 +1288,6 @@
   version "2.27.0-43.cdba6ec525e0213cce26f8e4bb23cf556d1479bb"
   resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-2.27.0-43.cdba6ec525e0213cce26f8e4bb23cf556d1479bb.tgz"
   integrity sha512-pwOsYdzw8+cwKlUrCzasiRh96RhNuJ/QcKr0HwjxxlUWTmbEayDKjqRRz5fsUYIpSv5fW1B3SsbzHOqVtFZ6XQ==
-
-"@prisma/engines-version@3.1.0-24.c22652b7e418506fab23052d569b85d3aec4883f":
-  version "3.1.0-24.c22652b7e418506fab23052d569b85d3aec4883f"
-  resolved "https://registry.able.dev/@prisma%2fengines-version/-/engines-version-3.1.0-24.c22652b7e418506fab23052d569b85d3aec4883f.tgz#f9908eb7808f2a546634398063942eaecb2474ef"
-  integrity sha512-EuEMKLuwIcBO7uInZQHeG1yaywcfl32Tq8TDf5tgLvblk+ka70sej7S67lh3BV5gXMLTc3GdthSHPfDqZEK5uA==
 
 "@prisma/engines@2.19.0-39.c1455d0b443d66b0d9db9bcb1bb9ee0d5bbc511d":
   version "2.19.0-39.c1455d0b443d66b0d9db9bcb1bb9ee0d5bbc511d"
@@ -4034,11 +3969,6 @@ date-fns@2.23.0, date-fns@^2.23.0:
   version "2.23.0"
   resolved "https://registry.able.co/date-fns/-/date-fns-2.23.0.tgz#4e886c941659af0cf7b30fafdd1eaa37e88788a9"
   integrity sha512-5ycpauovVyAk0kXNZz6ZoB9AYMZB4DObse7P3BPWmyEjXNORTI8EJ6X0uaSAq4sCHzM1uajzrkr6HnsLQpxGXA==
-
-date-fns@^2.24.0:
-  version "2.24.0"
-  resolved "https://registry.able.dev/date-fns/-/date-fns-2.24.0.tgz#7d86dc0d93c87b76b63d213b4413337cfd1c105d"
-  integrity sha512-6ujwvwgPID6zbI0o7UbURi2vlLDR9uP26+tW6Lg+Ji3w7dd0i3DOcjcClLjLPranT60SSEFBwdSyYwn/ZkPIuw==
 
 dayjs@^1.10.4:
   version "1.10.6"
@@ -9562,15 +9492,6 @@ react-query@3.16.0:
   version "3.16.0"
   resolved "https://registry.able.dev/react-query/-/react-query-3.16.0.tgz#8de1556aabb3d200d0f8eeb74ce2b0b3dd0a0a51"
   integrity sha512-YOvI8mO9WG+r4XsyJinjlDMiV5IewUWUcTv2J7z6bIP3KOFvgT6k6HM8vQouz4hPnme7Ktq9j5e7LarUqgJXFQ==
-  dependencies:
-    "@babel/runtime" "^7.5.5"
-    broadcast-channel "^3.4.1"
-    match-sorter "^6.0.2"
-
-react-query@^3.19.2:
-  version "3.24.3"
-  resolved "https://registry.able.dev/react-query/-/react-query-3.24.3.tgz#58c538fb55386fa947bda88acbe616e02cb5b2bb"
-  integrity sha512-JipKpn7XoDVvRWwXWXKSJU5SbNJKqspx9IRBntaQt1EQOBXe9314Z/8cV9YXXbZIhzrHAetT3X7tRClZaYk98g==
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"
